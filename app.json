@@ -2,6 +2,11 @@
     "name": "seatera",
     "options": {
       "allow-unauthenticated": true
+    },
+    "hooks": {
+        "prebuild": {
+          "commands": ["chmod 777 ./setup/prebuild.sh", "./setup/prebuild.sh"]
+        }
     }
   }
   

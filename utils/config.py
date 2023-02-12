@@ -1,8 +1,9 @@
 import yaml
 from yaml.loader import SafeLoader
 from copy import deepcopy
+import os
 
-CONFIG_FILE = './config.yaml'
+CONFIG_FILE = os.getenv('GOOGLE_CLOUD_PROJECT') +  '-seatera/config.yaml'
 
 
 class Config:
