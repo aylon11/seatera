@@ -6,3 +6,4 @@ google-auth-oauthlib
 python-dateutil
 pyyaml
 streamlit
+google-cloud
