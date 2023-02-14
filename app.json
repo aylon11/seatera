@@ -7,8 +7,8 @@
         "prebuild": {
           "commands": ["chmod 777 ./setup/prebuild.sh", "./setup/prebuild.sh"]
         },
-        "postbuild": {
-            "commands": ["chmod 777 ./setup/postbuild.sh", "./setup/postbuild.sh"]
+        "postcreate": {
+            "commands": ["chmod 777 ./setup/postcreate.sh", "./setup/postcreate.sh"]
         }
     }
   }
