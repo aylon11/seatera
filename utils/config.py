@@ -1,14 +1,17 @@
 import yaml
 from yaml.loader import SafeLoader
 from copy import deepcopy
+from google.cloud import storage
 import os
 
-CONFIG_FILE = os.getenv('GOOGLE_CLOUD_PROJECT') +  '-seatera/config.yaml'
-
+BUCKET_NAME = os.getenv('bucket_name')
+CONFIG_FILE_NAME = 'config.yaml'
+CONFIG_FILE_PATH = BUCKET_NAME +  '/' + CONFIG_FILE_NAME
+print(CONFIG_FILE_PATH)
 
 class Config:
     def __init__(self) -> None:
-        self.file_path = CONFIG_FILE
+        self.file_path = CONFIG_FILE_PATH
         config = self.load_config_from_file()
         if config is None:
             config = {}
@@ -29,7 +32,11 @@ class Config:
             self.valid_config = False
 
     def load_config_from_file(self):
-        with open(self.file_path, 'r') as f:
+        storage_clien = storage.Client()
+        bucket = storage_clien.bucket(BUCKET_NAME)
+        blob = bucket.blob(CONFIG_FILE_NAME)
+
+        with blob.open() as f:
             config = yaml.load(f, Loader=SafeLoader)
         return config
 
@@ -37,7 +44,10 @@ class Config:
         try:
             config = deepcopy(self.__dict__)
             del config['file_path']
-            with open(self.file_path, 'w') as f:
+            storage_client = storage.Client()
+            bucket = storage_client.bucket(BUCKET_NAME)
+            blob = bucket.blob(CONFIG_FILE_NAME)
+            with blob.open('w') as f:
                 yaml.dump(config, f)
             print(f"Configurations updated in {self.file_path}")
         except Exception as e:
