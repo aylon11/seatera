@@ -67,7 +67,9 @@ def run_from_ui(params: Dict[str, str], config: Config):
          sheets_handler, params, auto_upload_negatives=False)
 
 
-def get_accounts_for_ui(google_ads_client: GoogleAdsClient):
+def get_accounts_for_ui(config: Config):
+    print(config.__dict__)
+    google_ads_client = config.get_ads_client()
     accounts = AccountsBuilder(google_ads_client).get_accounts(with_names=True)
     return accounts
 

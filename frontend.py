@@ -46,7 +46,7 @@ def update_btn_state():
     st.session_state.run_btn_clicked = True 
 
 def get_accounts_list():
-    st.session_state.accounts_for_ui = get_accounts_for_ui(st.session_state.config.get_ads_client())
+    st.session_state.accounts_for_ui = get_accounts_for_ui(st.session_state.config)
 
 def value_placeholder(value):
     if value: return value
