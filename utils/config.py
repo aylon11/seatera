@@ -1,8 +1,9 @@
-import yaml
 from yaml.loader import SafeLoader
 from copy import deepcopy
 from google.cloud import storage
+from google.ads.googleads.client import GoogleAdsClient
 import os
+import yaml
 
 BUCKET_NAME = os.getenv('bucket_name')
 CONFIG_FILE_NAME = 'config.yaml'
@@ -22,7 +23,6 @@ class Config:
         self.developer_token = config.get('developer_token', '')
         self.login_customer_id = config.get('login_customer_id', '')
         self.spreadsheet_url = config.get('spreadsheet_url', '')
-        self.use_proto_plus = True
         self.check_valid_config()
 
     def check_valid_config(self):
@@ -53,3 +53,13 @@ class Config:
         except Exception as e:
             print(f"Could not write configurations to {self.file_path} file")
             print(e)
+
+    def get_ads_client(self):
+        return GoogleAdsClient.load_from_dict({
+            'client_id': self.client_id,
+            'client_secret': self.client_secret,
+            'login_customer_id': self.login_customer_id,
+            'developer_token': self.developer_token,
+            'refresh_token': self.refresh_token,
+            'use_proto_plus': True,
+        })
