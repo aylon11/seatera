@@ -62,4 +62,4 @@ class Config:
             'developer_token': self.developer_token,
             'refresh_token': self.refresh_token,
             'use_proto_plus': True,
-        })
+        }, version='v12')
